@@ -14,7 +14,7 @@ class PostRepositoryImpl extends PostRepository{
 
   @override
   Future<Either<Failure, List<Post>>> getAllPosts() {
-    // TODO: implement getAllPosts
+
     throw UnimplementedError();
   }
 
