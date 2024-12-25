@@ -7,7 +7,7 @@ import 'package:clean_architecture_project/features/posts/domain/entities/post.d
 import 'package:clean_architecture_project/features/posts/domain/repositories/post_repository.dart';
 import 'package:dartz/dartz.dart';
 import '../../../../core/errors/exceptions.dart';
-
+typedef Future<Unit> AddOrUpdateOrDelete();
 class PostRepositoryImpl extends PostRepository {
   final PostRemoteDataSource remoteDataSource;
   final PostLocalDataSource localDataSource;
@@ -43,40 +43,33 @@ class PostRepositoryImpl extends PostRepository {
     //i need to save list of post model not post entity in remote data source
     final PostModel postModel =
         PostModel(id: post.id, title: post.title, body: post.body);
-    if (await networkInfo.isConnected) {
-      try {
-        await remoteDataSource.addPost(postModel);
-        return Right(unit);
-      } on ServerException {
-        return Left(ServerFailure());
-      }
-    } else {
-      return Left(OfflineFailure());
-    }
-  }
-
-  @override
-  Future<Either<Failure, Unit>> deletePost(int postId) async{
-
-    if (await networkInfo.isConnected) {
-      try {
-        await remoteDataSource.deletePost(postId);
-        return Right(unit);
-      } on ServerException {
-        return Left(ServerFailure());
-      }
-    } else {
-      return Left(OfflineFailure());
-    }
-  }
-
-  @override
-  Future<Either<Failure, Unit>> updatePost(Post post) async{
-    final PostModel postModel =
     PostModel(id: post.id, title: post.title, body: post.body);
+    return await _getMessage(() {
+      return remoteDataSource.addPost(postModel);
+    });
+  }
+
+  @override
+  Future<Either<Failure, Unit>> deletePost(int postId) async {
+    return await _getMessage(() {
+      return remoteDataSource.deletePost(postId);
+    });
+  }
+
+  @override
+  Future<Either<Failure, Unit>> updatePost(Post post) async {
+    final PostModel postModel =
+        PostModel(id: post.id, title: post.title, body: post.body);
+    return await _getMessage(() {
+      return remoteDataSource.updatePost(postModel);
+    });
+  }
+
+  Future<Either<Failure, Unit>> _getMessage(
+      AddOrUpdateOrDelete addOrUpdateOrDelete) async {
     if (await networkInfo.isConnected) {
       try {
-        await remoteDataSource.updatePost(postModel);
+        await AddOrUpdateOrDelete;
         return Right(unit);
       } on ServerException {
         return Left(ServerFailure());
