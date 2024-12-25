@@ -7,7 +7,9 @@ import 'package:clean_architecture_project/features/posts/domain/entities/post.d
 import 'package:clean_architecture_project/features/posts/domain/repositories/post_repository.dart';
 import 'package:dartz/dartz.dart';
 import '../../../../core/errors/exceptions.dart';
+
 typedef Future<Unit> AddOrUpdateOrDelete();
+
 class PostRepositoryImpl extends PostRepository {
   final PostRemoteDataSource remoteDataSource;
   final PostLocalDataSource localDataSource;
@@ -43,7 +45,6 @@ class PostRepositoryImpl extends PostRepository {
     //i need to save list of post model not post entity in remote data source
     final PostModel postModel =
         PostModel(id: post.id, title: post.title, body: post.body);
-    PostModel(id: post.id, title: post.title, body: post.body);
     return await _getMessage(() {
       return remoteDataSource.addPost(postModel);
     });
