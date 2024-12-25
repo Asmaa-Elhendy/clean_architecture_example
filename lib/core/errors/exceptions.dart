@@ -1,6 +1,6 @@
 
-class OfflineFailure implements Exception{}
+class OfflineException implements Exception{}
 
-class ServerFailure implements Exception{}
+class ServerException implements Exception{}
 
-class EmptyCacheFailure implements Exception{}
+class EmptyCacheException implements Exception{}
