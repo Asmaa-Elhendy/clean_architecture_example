@@ -2,11 +2,17 @@ import 'package:flutter/material.dart';
 
 final primaryColor = Color(0xff082659);
 final secondaryColor = Color(0xff51eec2);
+final whiteColor=Colors.white;
 
 final appTheme = ThemeData(
     appBarTheme: AppBarTheme(
       backgroundColor: primaryColor,
       centerTitle: true,
+      titleTextStyle: TextStyle(
+        color: whiteColor, // Set the desired text color
+        fontSize: 20, // Optional: Customize font size
+        fontWeight: FontWeight.bold, // Optional: Customize font weight
+      ),
     ),
     brightness: Brightness.light,
     primaryColor: primaryColor,

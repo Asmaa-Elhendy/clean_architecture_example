@@ -14,7 +14,7 @@ class PostsBloc extends Bloc<PostsEvent, PostsState> {
   PostsBloc({required this.getAllPostsUseCase}) : super(PostsInitial()) {
     on<PostsEvent>((event, emit) async {
       if (event is GetAllPostsEvent || event is RefreshPostsEvent) {
-        emit(PostsFetchingState());
+        emit(LoadingPostsState());
         final failureOrPosts = await getAllPostsUseCase();
         failureOrPosts.fold((failure) {
           emit(PostsFetchingFailureState(

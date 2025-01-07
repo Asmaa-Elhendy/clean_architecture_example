@@ -9,7 +9,7 @@ abstract class PostsState extends Equatable {
 
 class PostsInitial extends PostsState {}
 
-class PostsFetchingState extends PostsState {}
+class LoadingPostsState extends PostsState {}
 
 class PostsFetchingFailureState extends PostsState {
   //loading
