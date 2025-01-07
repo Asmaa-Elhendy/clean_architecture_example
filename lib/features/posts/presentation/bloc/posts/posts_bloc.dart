@@ -5,7 +5,7 @@ import 'package:equatable/equatable.dart';
 import 'package:bloc/bloc.dart';
 import 'package:meta/meta.dart';
 import '../../../domain/entities/post.dart';
-import 'package:dartz/dartz.dart';
+
 part 'posts_event.dart';
 part 'posts_state.dart';
 
