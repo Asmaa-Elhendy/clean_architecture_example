@@ -7,6 +7,7 @@ final whiteColor=Colors.white;
 final appTheme = ThemeData(
     appBarTheme: AppBarTheme(
       backgroundColor: primaryColor,
+      foregroundColor: whiteColor,
       centerTitle: true,
       titleTextStyle: TextStyle(
         color: whiteColor, // Set the desired text color

@@ -44,7 +44,7 @@ class PostRepositoryImpl extends PostRepository {
   Future<Either<Failure, Unit>> addPost(Post post) async {
     //i need to save list of post model not post entity in remote data source
     final PostModel postModel =
-        PostModel(id: post.id, title: post.title, body: post.body);
+        PostModel( title: post.title, body: post.body);
     return await _getMessage(() {
       return remoteDataSource.addPost(postModel);
     });
