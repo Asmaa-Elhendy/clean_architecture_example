@@ -1,8 +1,10 @@
 import 'package:clean_architecture_project/features/posts/presentation/bloc/add_update_delete_posts/add_update_delete_posts_bloc.dart';
+import 'package:clean_architecture_project/features/posts/presentation/widgets/post_add_update_page/text_form_field_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../../domain/entities/post.dart';
+import 'form_submit_btn.dart';
 
 class FormWidget extends StatefulWidget {
   final bool isUpdate;
@@ -27,6 +29,31 @@ class _FormWidgetState extends State<FormWidget> {
     super.initState();
   }
 
+  @override
+  Widget build(BuildContext context) {
+    return SingleChildScrollView(
+      child: Form(
+          key: _formKey,
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              TextFormFieldWidget(
+                  hintText: "Title",
+                  controller: _titleController,
+                  minLines: false),
+              TextFormFieldWidget(
+                  hintText: "Body",
+                  controller: _bodyController,
+                  minLines: true),
+              FormSubmitBtn(
+                  onPressed: validateFormThenAddOrUpdate,
+                  isUpdate: widget.isUpdate)
+            ],
+          )),
+    );
+  }
+
   void validateFormThenAddOrUpdate() {
     bool isValid = _formKey.currentState!.validate();
     if (isValid) {
@@ -43,45 +70,5 @@ class _FormWidgetState extends State<FormWidget> {
             .add(AddPostEvent(post: post));
       }
     }
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return SingleChildScrollView(
-      child: Form(
-          key: _formKey,
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: [
-              Padding(
-                padding:
-                    const EdgeInsets.symmetric(vertical: 10, horizontal: 20),
-                child: TextFormField(
-                  controller: _titleController,
-                  decoration: InputDecoration(hintText: "Title"),
-                  validator: (val) =>
-                      val!.isEmpty ? "Title cannot be empty" : null,
-                ),
-              ),
-              Padding(
-                padding:
-                    const EdgeInsets.symmetric(vertical: 10, horizontal: 20),
-                child: TextFormField(
-                  controller: _bodyController,
-                  maxLines: 6,
-                  validator: (val) =>
-                      val!.isEmpty ? "Body cannot be empty" : null,
-                  decoration: InputDecoration(hintText: "Body"),
-                ),
-              ),
-              ElevatedButton.icon(
-                onPressed: validateFormThenAddOrUpdate,
-                label: Text(widget.isUpdate ? "Update" : "Add"),
-                icon: widget.isUpdate ? Icon(Icons.update) : Icon(Icons.add),
-              )
-            ],
-          )),
-    );
   }
 }
